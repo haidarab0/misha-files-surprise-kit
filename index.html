@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Misha Files</title>
+  <style>
+    :root {
+      --ink: #151515;
+      --muted: #68645e;
+      --paper: #fffaf1;
+      --line: #d8c9b4;
+      --gold: #b9852f;
+      --green: #315f52;
+      --red: #9f2f38;
+      --blue: #1f4d78;
+      --shadow: 0 26px 70px rgba(35, 27, 18, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #ede4d7;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+    }
+
+    .hero {
+      min-height: 78vh;
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) minmax(280px, 430px);
+      gap: 28px;
+      align-items: center;
+      padding: clamp(24px, 5vw, 54px);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(58px, 10vw, 128px);
+      line-height: 0.88;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin-top: 18px;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.35;
+      max-width: 690px;
+    }
+
+    .hero-photo {
+      aspect-ratio: 4 / 5;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 46px rgba(35, 27, 18, 0.22);
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 0;
+      margin-bottom: 10px;
+      background: rgba(237, 228, 215, 0.94);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav a {
+      flex: 0 0 auto;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      padding: 9px 13px;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .page {
+      min-height: 760px;
+      display: grid;
+      gap: 18px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      margin: 22px 0;
+      padding: clamp(22px, 4vw, 42px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .page h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(38px, 7vw, 78px);
+      line-height: 0.92;
+      letter-spacing: 0;
+    }
+
+    .kicker {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.86fr) minmax(280px, 1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .photo-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      min-height: 360px;
+      background: #ddd;
+    }
+
+    .box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.48);
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .item {
+      display: grid;
+      gap: 4px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      line-height: 1.35;
+    }
+
+    .item strong {
+      font-size: 18px;
+    }
+
+    .item span,
+    .muted {
+      color: var(--muted);
+    }
+
+    .profile {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 20px;
+      align-items: end;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+    }
+
+    .avatar {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid white;
+      box-shadow: 0 12px 30px rgba(35, 27, 18, 0.18);
+      background: #ddd;
+    }
+
+    .profile h2 {
+      font-size: clamp(40px, 7vw, 74px);
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: white;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .newspaper {
+      background: #f9f6ed;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 4px double var(--ink);
+      border-top: 4px double var(--ink);
+      padding: 10px 0;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+    }
+
+    .headline {
+      font-size: clamp(52px, 10vw, 112px);
+      line-height: 0.86;
+      margin-top: 18px;
+    }
+
+    .court {
+      background: #fbfbf8;
+    }
+
+    .stamp {
+      position: absolute;
+      right: clamp(18px, 6vw, 80px);
+      top: 150px;
+      border: 5px solid var(--red);
+      color: var(--red);
+      transform: rotate(-9deg);
+      padding: 12px 18px;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 950;
+      text-transform: uppercase;
+      opacity: 0.86;
+    }
+
+    .storybook {
+      background: linear-gradient(180deg, #fff7df, #f5e9cd);
+    }
+
+    .storybook-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(280px, 0.82fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .storybook-copy {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 5vw, 54px);
+      line-height: 1.04;
+    }
+
+    .movie {
+      background: #151515;
+      color: #fff8e8;
+      min-height: 860px;
+      padding: 0;
+    }
+
+    .movie .poster-photo {
+      position: absolute;
+      inset: 0;
+      opacity: 0.68;
+    }
+
+    .movie::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(0,0,0,0.86));
+    }
+
+    .poster-copy {
+      position: relative;
+      z-index: 1;
+      align-self: end;
+      padding: clamp(26px, 6vw, 58px);
+      display: grid;
+      gap: 10px;
+    }
+
+    .poster-copy h2 {
+      font-size: clamp(64px, 13vw, 148px);
+      color: #fff8e8;
+    }
+
+    .poster-copy p {
+      max-width: 680px;
+      font-size: clamp(17px, 2vw, 24px);
+      color: #e9d7b8;
+      line-height: 1.35;
+    }
+
+    .briefing {
+      background: #182620;
+      color: #edf7ef;
+    }
+
+    .briefing .box {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .briefing .muted,
+    .briefing .item span {
+      color: #b9c8bf;
+    }
+
+    .stickers {
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      display: grid;
+      gap: 14px;
+    }
+
+    .sticker {
+      min-height: 170px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 12px 24px rgba(35, 27, 18, 0.10);
+    }
+
+    .sticker-photo {
+      border-radius: 8px;
+      overflow: hidden;
+      min-height: 100px;
+    }
+
+    .sticker strong {
+      text-align: center;
+      line-height: 1.05;
+      font-size: 18px;
+    }
+
+    .horoscope {
+      background: linear-gradient(135deg, #162238, #53384a 62%, #8a5a3d);
+      color: #fff8e8;
+    }
+
+    .zodiac-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .zodiac-grid .box {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    .museum {
+      background: #f7f4ec;
+    }
+
+    .museum-card {
+      display: grid;
+      grid-template-columns: minmax(290px, 0.9fr) minmax(280px, 1fr);
+      gap: 28px;
+      align-items: end;
+    }
+
+    .plaque {
+      background: #eee1c7;
+      border: 1px solid #c4ab7a;
+      border-radius: 8px;
+      padding: 24px;
+      display: grid;
+      gap: 12px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45);
+    }
+
+    .plaque h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(30px, 5vw, 58px);
+      line-height: 0.95;
+    }
+
+    .closing {
+      min-height: 440px;
+      text-align: center;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .closing h2 {
+      color: var(--paper);
+    }
+
+    .closing p {
+      max-width: 680px;
+      color: #d6c6ad;
+      font-size: 20px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 840px) {
+      .hero,
+      .two-col,
+      .profile,
+      .storybook-grid,
+      .museum-card {
+        grid-template-columns: 1fr;
+      }
+
+      .stickers,
+      .zodiac-grid {
+        grid-template-columns: repeat(2, minmax(130px, 1fr));
+      }
+
+      .stamp {
+        position: static;
+        width: fit-content;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .shell {
+        width: 100%;
+        padding: 0;
+      }
+
+      .hero,
+      .nav {
+        display: none;
+      }
+
+      .page {
+        min-height: 100vh;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div>
+        <p class="kicker">Prepared for Anna</p>
+        <h1>The Misha Files</h1>
+        <p>Ten official-looking, deeply unserious artifacts documenting one gray cat's rise to domestic power.</p>
+      </div>
+      <div class="hero-photo">
+        <img src="assets/misha-dangle.jpeg" alt="Misha looking down from a chair">
+      </div>
+    </section>
+
+    <nav class="nav" aria-label="Misha file sections">
+      <a href="#cv">CV</a>
+      <a href="#linkedin">LinkedIn</a>
+      <a href="#news">News</a>
+      <a href="#court">Court</a>
+      <a href="#book">Book</a>
+      <a href="#movie">Movie</a>
+      <a href="#briefing">Briefing</a>
+      <a href="#stickers">Stickers</a>
+      <a href="#horoscope">Horoscope</a>
+      <a href="#museum">Museum</a>
+    </nav>
+
+    <section class="page" id="cv">
+      <div class="two-col">
+        <div class="photo-card">
+          <img src="assets/misha-lookout.jpeg" alt="Misha watching from above">
+        </div>
+        <div>
+          <p class="kicker">Curriculum Vitae</p>
+          <h2>Misha</h2>
+          <p class="muted">Senior Chair Occupation Officer. Specialist in silence, judgment, and suspiciously timed affection.</p>
+          <div class="list">
+            <div class="item"><strong>Current Role</strong><span>Director of Vertical Supervision at Anna's Residence.</span></div>
+            <div class="item"><strong>Core Skills</strong><span>Balcony-level staring, refusing simple explanations, appearing exactly where he should not.</span></div>
+            <div class="item"><strong>Achievements</strong><span>Maintained full control of one chair, one room, and at least three human emotions.</span></div>
+            <div class="item"><strong>References</strong><span>Available upon snack delivery.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="linkedin">
+      <div class="profile">
+        <div class="avatar"><img src="assets/misha-judge.jpeg" alt="Misha profile photo"></div>
+        <div>
+          <p class="kicker">Professional Network Update</p>
+          <h2>Misha</h2>
+          <p class="muted">Chief Emotional Support Officer at Anna's Apartment</p>
+          <div class="badge-row">
+            <span class="badge">Open to treats</span>
+            <span class="badge">500+ naps</span>
+            <span class="badge">Top voice in chair ownership</span>
+          </div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="box">
+          <h3>About</h3>
+          <p class="muted">Strategic domestic executive with a proven history of entering rooms silently and making the atmosphere about himself. Trusted by Anna for advanced supervision and occasional softness.</p>
+        </div>
+        <div class="box">
+          <h3>Recent Activity</h3>
+          <div class="list">
+            <div class="item"><strong>Misha changed his title</strong><span>From Cat to Household Board Member.</span></div>
+            <div class="item"><strong>Misha endorsed Anna</strong><span>Skills: patience, blanket management, opening doors.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page newspaper" id="news">
+      <div class="masthead"><span>The Apartment Times</span><span>Special Evening Edition</span></div>
+      <h2 class="headline">Local Cat Refuses To Explain Why He Is Up There</h2>
+      <div class="two-col">
+        <div>
+          <p class="muted">Witnesses report that Anna looked up and discovered Misha occupying a location that was "technically possible but emotionally unnecessary."</p>
+          <div class="list">
+            <div class="item"><strong>Official statement</strong><span>Misha blinked once and declined further questions.</span></div>
+            <div class="item"><strong>Developing detail</strong><span>The chair remains under feline administration.</span></div>
+          </div>
+        </div>
+        <div class="photo-card">
+          <img src="assets/misha-dangle.jpeg" alt="Misha refusing to explain himself">
+        </div>
+      </div>
+    </section>
+
+    <section class="page court" id="court">
+      <p class="kicker">District Court of Domestic Affairs</p>
+      <h2>Anna v. Misha</h2>
+      <div class="stamp">Exhibit A</div>
+      <div class="two-col">
+        <div class="box">
+          <h3>Charges</h3>
+          <div class="list">
+            <div class="item"><strong>Count I</strong><span>Unauthorized occupation of elevated furniture.</span></div>
+            <div class="item"><strong>Count II</strong><span>Intentional emotional manipulation by looking cute after the fact.</span></div>
+            <div class="item"><strong>Count III</strong><span>Failure to answer when called, followed by sudden appearance.</span></div>
+          </div>
+        </div>
+        <div class="photo-card">
+          <img src="assets/misha-lookout.jpeg" alt="Evidence photo of Misha">
+        </div>
+      </div>
+      <div class="box">
+        <h3>Verdict</h3>
+        <p class="muted">The court finds the defendant guilty, but impossible to punish. Sentence: one compliment, two gentle head touches, and continued monitoring by Anna.</p>
+      </div>
+    </section>
+
+    <section class="page storybook" id="book">
+      <p class="kicker">A Very Short Book</p>
+      <div class="storybook-grid">
+        <div>
+          <h2>Misha and the Very Important Chair</h2>
+          <p class="storybook-copy">One afternoon, Anna looked for Misha. Misha was not missing. He was simply above the problem.</p>
+        </div>
+        <div class="photo-card">
+          <img src="assets/misha-judge.jpeg" alt="Misha above the chair">
+        </div>
+      </div>
+      <div class="box">
+        <p class="muted">Page 2: Anna asked him to come down. Misha considered the request, filed it internally, and continued being furniture royalty.</p>
+      </div>
+    </section>
+
+    <section class="page movie" id="movie">
+      <div class="poster-photo">
+        <img src="assets/misha-dangle.jpeg" alt="Cinematic poster of Misha">
+      </div>
+      <div class="poster-copy">
+        <p class="kicker">This season</p>
+        <h2>MISHA</h2>
+        <p>The apartment is quiet. Anna suspects nothing. From the top of the chair, one gray legend prepares to ignore all instructions.</p>
+        <p class="muted">Starring Misha as Himself. Featuring Anna as The Human With Access To Doors.</p>
+      </div>
+    </section>
+
+    <section class="page briefing" id="briefing">
+      <p class="kicker">Confidential Daily Report</p>
+      <h2>Subject: Misha</h2>
+      <div class="two-col">
+        <div class="photo-card">
+          <img src="assets/misha-lookout.jpeg" alt="Misha surveillance photo">
+        </div>
+        <div class="box">
+          <h3>Status</h3>
+          <div class="list">
+            <div class="item"><strong>Mood</strong><span>Quietly superior.</span></div>
+            <div class="item"><strong>Threat Level</strong><span>Snack-driven but manageable.</span></div>
+            <div class="item"><strong>Anna Advisory</strong><span>Approach with respect. Compliments may reduce resistance by 12%.</span></div>
+            <div class="item"><strong>Forecast</strong><span>Probable chair occupation. Possible dramatic staring.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="stickers">
+      <p class="kicker">Sticker Pack Concepts</p>
+      <h2>Misha Replies</h2>
+      <div class="stickers">
+        <div class="sticker"><div class="sticker-photo"><img src="assets/misha-judge.jpeg" alt="Misha sticker"></div><strong>Anna, explain.</strong></div>
+        <div class="sticker"><div class="sticker-photo"><img src="assets/misha-lookout.jpeg" alt="Misha sticker"></div><strong>I saw that.</strong></div>
+        <div class="sticker"><div class="sticker-photo"><img src="assets/misha-dangle.jpeg" alt="Misha sticker"></div><strong>Not coming down.</strong></div>
+        <div class="sticker"><div class="sticker-photo"><img src="assets/misha-judge.jpeg" alt="Misha sticker"></div><strong>Respectfully no.</strong></div>
+        <div class="sticker"><div class="sticker-photo"><img src="assets/misha-dangle.jpeg" alt="Misha sticker"></div><strong>Chair secured.</strong></div>
+        <div class="sticker"><div class="sticker-photo"><img src="assets/misha-lookout.jpeg" alt="Misha sticker"></div><strong>Snack?</strong></div>
+        <div class="sticker"><div class="sticker-photo"><img src="assets/misha-judge.jpeg" alt="Misha sticker"></div><strong>Anna pls.</strong></div>
+        <div class="sticker"><div class="sticker-photo"><img src="assets/misha-dangle.jpeg" alt="Misha sticker"></div><strong>Management is watching.</strong></div>
+      </div>
+    </section>
+
+    <section class="page horoscope" id="horoscope">
+      <p class="kicker">Today's Horoscope</p>
+      <h2>Misha Rising</h2>
+      <div class="two-col">
+        <div>
+          <p class="muted">The stars indicate a strong chance of selective hearing, unexpected affection, and one unexplained climb.</p>
+          <div class="zodiac-grid">
+            <div class="box"><strong>Lucky word</strong><p class="muted">Anna</p></div>
+            <div class="box"><strong>Lucky place</strong><p class="muted">Above eye level</p></div>
+            <div class="box"><strong>Warning</strong><p class="muted">Do not underestimate silence</p></div>
+          </div>
+        </div>
+        <div class="photo-card">
+          <img src="assets/misha-dangle.jpeg" alt="Misha horoscope portrait">
+        </div>
+      </div>
+    </section>
+
+    <section class="page museum" id="museum">
+      <p class="kicker">Museum of Domestic Greatness</p>
+      <h2>Featured Exhibit</h2>
+      <div class="museum-card">
+        <div class="photo-card">
+          <img src="assets/misha-lookout.jpeg" alt="Museum portrait of Misha">
+        </div>
+        <div class="plaque">
+          <h3>Portrait of Misha, Chair Period</h3>
+          <p class="muted">Unknown master, contemporary apartment era. The subject is shown in a classic elevated pose, suggesting authority, distance, and a complete lack of accountability.</p>
+          <p class="muted">Collection of Anna, acquired through emotional inevitability.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page closing">
+      <div>
+        <p class="kicker">Final Note</p>
+        <h2>For Anna</h2>
+        <p>This is not a game. This is official documentation proving that Misha is dramatic, important, and almost certainly in charge.</p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
